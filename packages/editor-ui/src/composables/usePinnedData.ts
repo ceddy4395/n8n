@@ -44,7 +44,7 @@ export function usePinnedData(
 	const telemetry = useTelemetry();
 	const externalHooks = useExternalHooks();
 
-	const { sessionId } = storeToRefs(rootStore);
+	const { pushRef } = storeToRefs(rootStore);
 	const { isSubNodeType, isMultipleOutputsNodeType } = useNodeType({
 		node,
 	});
@@ -159,7 +159,7 @@ export function usePinnedData(
 		const telemetryPayload = {
 			pinning_source: source,
 			node_type: targetNode?.type,
-			session_id: sessionId.value,
+			push_ref: pushRef.value,
 			data_size: stringSizeInBytes(data.value),
 			view: displayMode,
 			run_index: runIndex,
@@ -183,7 +183,7 @@ export function usePinnedData(
 		telemetry.track('Ndv data pinning failure', {
 			pinning_source: source,
 			node_type: targetNode?.type,
-			session_id: sessionId.value,
+			push_ref: pushRef.value,
 			data_size: stringSizeInBytes(data.value),
 			view: displayMode,
 			run_index: runIndex,
@@ -221,7 +221,7 @@ export function usePinnedData(
 
 		telemetry.track('User unpinned ndv data', {
 			node_type: targetNode?.type,
-			session_id: sessionId.value,
+			push_ref: pushRef.value,
 			run_index: runIndex,
 			source,
 			data_size: stringSizeInBytes(data.value),
